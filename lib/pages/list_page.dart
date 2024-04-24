@@ -13,12 +13,9 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   late Future<List<Shop>> data;
-
-  var url = 'https://jsonplaceholder.typicode.com/albums/1';
+  var url = 'https://kusumawardanastudio.com/api/api_online.php';
 
   Future<List<Shop>> fetchData() async {
-    var url = 'https://kusumawardanastudio.com/api/api_online.php';
-
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -55,23 +52,24 @@ class _ListPageState extends State<ListPage> {
             );
           } else {
             if (snapshot.hasData) {
-              if (snapshot.data!.isEmpty) {
+              if (snapshot.data!.isNotEmpty) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(snapshot.data![index].title),
+                        subtitle: Text(snapshot.data![index].description),
+                        leading: Image.network(snapshot.data![index].image),
+                        trailing: Text(snapshot.data![index].harga),
+                      ),
+                    );
+                  },
+                );
+              } else {
                 return const Center(
                   child: Text("Tidak ada data dari API"),
                 );
-              } else {
-                return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(snapshot.data![index].title),
-                          subtitle: Text(snapshot.data![index].description),
-                          leading: Image.network(snapshot.data![index].image),
-                          trailing: Text(snapshot.data![index].harga),
-                        ),
-                      );
-                    });
               }
             } else {
               return const Center(
