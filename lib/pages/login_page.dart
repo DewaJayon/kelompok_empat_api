@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:kelompok_empat_api/pages/list_page.dart';
+import 'package:kelompok_empat_api/widgets/custom_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -42,53 +43,43 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          labelText: 'Username',
-                        ),
-                      ),
-                    ),
-                  ),
+                CustomTextFormField(
+                  hintText: 'Username',
+                  labelText: 'Masukkan Username',
                 ),
                 SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.remove_red_eye),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  lihatPassword = !lihatPassword;
-                                },
-                              );
-                            },
-                          ),
-                          border: InputBorder.none,
-                          labelText: 'Password',
-                        ),
-                        obscureText: lihatPassword,
-                      ),
-                    ),
-                  ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       color: Colors.grey[200],
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     child: Padding(
+                //       padding: const EdgeInsets.only(left: 15),
+                //       child: TextField(
+                //         decoration: InputDecoration(
+                //           suffixIcon: IconButton(
+                //             icon: Icon(Icons.remove_red_eye),
+                //             onPressed: () {
+                //               setState(
+                //                 () {
+                //                   lihatPassword = !lihatPassword;
+                //                 },
+                //               );
+                //             },
+                //           ),
+                //           border: InputBorder.none,
+                //           labelText: 'Password',
+                //         ),
+                //         obscureText: lihatPassword,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                CustomTextFormField(
+                  hintText: 'Password',
+                  labelText: 'Masukkan Password',
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10),

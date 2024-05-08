@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kelompok_empat_api/models/shop.dart';
+import 'package:kelompok_empat_api/pages/detail_page.dart';
+import 'package:kelompok_empat_api/pages/pages.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
@@ -56,12 +58,39 @@ class _ListPageState extends State<ListPage> {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
+                    var shop = snapshot.data![index];
                     return Card(
                       child: ListTile(
-                        title: Text(snapshot.data![index].title),
-                        subtitle: Text(snapshot.data![index].description),
-                        leading: Image.network(snapshot.data![index].image),
-                        trailing: Text(snapshot.data![index].harga),
+                        onTap: () {
+                          Shop model = Shop(
+                            id: shop.id,
+                            title: shop.title,
+                            description: shop.description,
+                            image: shop.image,
+                            harga: shop.harga,
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailPage(model: model),
+                            ),
+                          );
+                        },
+                        title: Text(
+                          shop.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          shop.description,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        leading: Image.network(shop.image),
+                        trailing: Text(shop.harga),
                       ),
                     );
                   },
@@ -78,6 +107,20 @@ class _ListPageState extends State<ListPage> {
             }
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const CreatePage();
+              },
+            ),
+          );
+        },
+        backgroundColor: Colors.yellow,
+        child: const Icon(Icons.add_shopping_cart),
       ),
     );
   }
