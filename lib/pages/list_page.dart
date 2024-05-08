@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kelompok_empat_api/models/shop.dart';
-import 'package:kelompok_empat_api/pages/detail_page.dart';
 import 'package:kelompok_empat_api/pages/pages.dart';
 
 class ListPage extends StatefulWidget {
@@ -113,9 +112,7 @@ class _ListPageState extends State<ListPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) {
-                return const CreatePage();
-              },
+              builder: (context) => const CreatePage(),
             ),
           );
         },
