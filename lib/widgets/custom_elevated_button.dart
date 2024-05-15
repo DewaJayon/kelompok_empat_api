@@ -26,10 +26,10 @@ class CustomElevatedButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Center(
+          child: Center(
             child: Text(
-              "Login",
-              style: TextStyle(
+              text,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 18,
               ),

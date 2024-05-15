@@ -43,6 +43,16 @@ class _ListPageState extends State<ListPage> {
       appBar: AppBar(
         title: const Text('UNHI Shop'),
         backgroundColor: Colors.yellow,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                data = fetchData();
+              });
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
       ),
       body: FutureBuilder<List<Shop>>(
         future: data,

@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:kelompok_empat_api/widgets/custom_elevated_button.dart';
 
 class CreatePage extends StatefulWidget {
   const CreatePage({super.key});
@@ -14,6 +17,46 @@ class _CreatePageState extends State<CreatePage> {
   final description = TextEditingController();
   final harga = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text("Data Disimpan"),
+        action: SnackBarAction(
+            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
+  void sendData() async {
+    var urlApiCreate = "https://kusumawardanastudio.com/api/api_create.php";
+    var dataSend = {
+      "title": title.text,
+      "description": description.text,
+      "harga": harga.text
+    };
+
+    final response = await http.post(
+      Uri.parse(urlApiCreate),
+      body: dataSend,
+    );
+
+    if (response.statusCode == 200) {
+      Map api = json.decode(response.body);
+      print(api['status']);
+
+      if (api['status'] == "Success") {
+        _showToast(context);
+      } else if (api['status'] == "Error") {
+        print("error");
+      } else {
+        throw Exception('Gagal menambahkan data!');
+      }
+    } else {
+      throw Exception('Gagal menambahkan data!');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +141,7 @@ class _CreatePageState extends State<CreatePage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: harga,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -120,26 +164,12 @@ class _CreatePageState extends State<CreatePage> {
               const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow,
-                  ),
-                  child: Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
+                child: CustomElevatedButton(
+                  onPressed: () {
+                    sendData();
+                    _showToast(context);
+                  },
+                  text: 'Submit',
                 ),
               ),
             ],
